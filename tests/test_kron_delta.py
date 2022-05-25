@@ -1,8 +1,9 @@
 """Test Konrecker delta function."""
 
-from mahon.mahon_linreg import kron_delta
 import numpy as np
 import pytest
+
+from mahon.mahon_linreg import kron_delta
 
 
 def test_kron_delta():
