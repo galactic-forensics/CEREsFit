@@ -29,8 +29,7 @@ jobs:
         python -m pip install --upgrade pip
         pip install nox
         pip install coveralls
-        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-        if [ -f dev-requirements.txt ]; then pip install -r dev-requirements.txt; fi
+        pip install .[test]
     - name: Run nox
       run: nox
     - name: Re-run coverage and push to coveralls
