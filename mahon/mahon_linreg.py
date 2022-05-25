@@ -38,7 +38,7 @@ class LinReg:
             "iter_max": Maximum iteration limit for slope (default 1e6)
             "reg_limit": Regression limit for slope (default: 1e-6)
 
-        raises ValueError: Fix point is of the wrong shape.
+        :raises ValueError: Fix point is of the wrong shape.
         """
         self.xdat = np.array(xdat)
         self.sigx = np.array(sigx)
@@ -146,13 +146,20 @@ class LinReg:
         """Iterate the slope until it fits."""
 
         def calc_weights(b: float):
-            """Calculate weights and return them."""
+            """Calculate weights and return them.
+
+            :param b: Slope
+
+            :return: Weights
+            """
             return 1 / (self.sigy**2 + b**2 * self.sigx**2 - 2 * b * self.sigxy)
 
         def calc_xbar(weights: np.ndarray):
             """Calculate x bar and return it.
 
             :param weights: Weights.
+
+            :return: X bar.
             """
             if self.fix_pt is None:
                 return np.sum(weights * self.xdat) / np.sum(weights)
@@ -163,6 +170,8 @@ class LinReg:
             """Calculate y bar and return it.
 
             :param weights: Weights.
+
+            :return: Y bar.
             """
             if self.fix_pt is None:
                 return np.sum(weights * self.ydat) / np.sum(weights)
@@ -235,7 +244,7 @@ class LinReg:
 
         sum_weights = np.sum(weights)
 
-        # d(\theta) / db
+        # d(theta) / db
         dthdb = np.sum(
             weights**2
             * (
@@ -252,11 +261,12 @@ class LinReg:
             )
         )
 
-        # d(\theta) / dxi
         def calc_dtheta_dxi(it: int):
-            """Calculate partial derivative d(\theta)/dxi.
+            """Calculate partial derivative d(theta)/dxi.
 
-            :param ind: Index where the $i$ is at.
+            :param it: Index where the $i$ is at.
+
+            :return: dtheta/dxi
             """
             if self.fix_pt is None:
                 sum_all = 0.0
@@ -281,11 +291,12 @@ class LinReg:
                     - v_all[it] * sigy[it] ** 2
                 )
 
-        # d(\theta) / dyi
         def calc_dtheta_dyi(it: int):
-            """Calculate partial derivative d(\theta)/dyi.
+            """Calculate partial derivative d(theta)/dyi.
 
-            :param ind: Index where the $i$ is at.
+            :param it: Index where the $i$ is at.
+
+            :return: dtheta/dyi
             """
             if self.fix_pt is None:
                 sum_all = 0.0
@@ -310,11 +321,12 @@ class LinReg:
                     + 2 * v_all[it] * sigxy[it]
                 )
 
-        # da / dxi
         def calc_da_dxi(it: int):
             """Calculate partial derivative da/dxi.
 
-            :param ind: Index where the $i$ is at.
+            :param it: Index where the $i$ is at.
+
+            :return: da/dxi
             """
             if self.fix_pt is None:
                 return (
@@ -323,11 +335,12 @@ class LinReg:
             else:
                 return -xbar * calc_dtheta_dxi(it) / dthdb
 
-        # da / dyi
         def calc_da_dyi(it: int):
             """Calculate partial derivative da/dyi.
 
-            :param ind: Index where the $i$ is at.
+            :param it: Index where the $i$ is at.
+
+            :return: da/dyi
             """
             if self.fix_pt is None:
                 return weights[it] / sum_weights - xbar * calc_dtheta_dyi(it) / dthdb
