@@ -3,7 +3,7 @@
 import nox
 
 
-nox.options.sessions = "lint", "tests"
+nox.options.sessions = "lint", "tests", "safety"
 
 package = "mahon"
 locations = "mahon", "tests", "noxfile.py"
@@ -35,12 +35,12 @@ def tests(session):
     session.run("pytest")
 
 
-# todo
 @nox.session(python=python_main)
 def safety(session):
     """Safety check for all dependencies."""
     session.install("--upgrade", "pip")
-    session.install("safety", "-r", "requirements.txt", "-r", "dev-requirements.txt")
+    session.install("safety")
+    session.install(".[dev,test]")
     session.run(
         "safety",
         "check",
