@@ -1,0 +1,53 @@
+[build-system]
+requires = ["flit_core >=3.2,<4"]
+build-backend = "flit_core.buildapi"
+
+[project]
+authors = [{name = "Reto Trappitsch", email = "reto@galactic-forensics.space"}]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Operating System :: OS Independent",
+    "License :: OSI Approved :: MIT License",
+    "Intended Audience :: Science/Research",
+    "Topic :: Scientific/Engineering",
+    "Topic :: Scientific/Engineering :: Physics",
+]
+dependencies = ["numpy"]
+dynamic = ["version", "description"]
+license = {file = "LICENSE"}
+name = "mahon"
+readme = "README.md"
+requires-python=">=3.8"
+
+[project.urls]
+Home = "https://github.com/galactic-forensics/mahon"
+
+[project.optional-dependencies]
+dev = [
+    "nox"
+]
+
+test = [
+    "darglint>=1.5.1",
+    "flake8",
+    "flake8-bandit",
+    "flake8-black",
+    "flake8-bugbear",
+    "flake8-docstrings",
+    "flake8-import-order",
+    "bandit<=1.7.2",
+    "pytest>=6.0",
+    "pytest-cov",
+]
+
+[tool.flit.sdist]
+exclude = ["examples/"]
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "--cov=mahon -v"
+testpaths = "tests"

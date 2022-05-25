@@ -1,0 +1,16 @@
+[flake8]
+select = B,B9,BLK,C,D,DAR,E,F,I,S,W
+
+# black configuration
+ignore = E203,E501,W503
+max-line-length = 88
+
+# import order
+application-import-names = iniabu,tests
+import-order-style = google
+
+# bandit: exclude test cases
+per-file-ignores = tests/*:S101
+
+# docstring style linting
+docstring-convention = pep257
