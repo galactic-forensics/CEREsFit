@@ -10,7 +10,7 @@
 The goal of this project is to provide a python package
 that allows to calculate linear regressions on data sets with uncertainties.
 Linear regressions can be performed for correlated and uncorrelated uncertainties.
-The calculations follow the methodology published by 
+The calculations follow the methodology published by
 [Mahon (1996)](https://doi.org/10.1080/00206819709465336).
 Typographical errors that were made in that work have been corrected.
 A method to allow calculating a linear regression through a fixed point,
@@ -75,11 +75,11 @@ run:
 pip install -e .[dev,test]
 ```
 
-Code auto formatting is implemented using 
+Code auto formatting is implemented using
 [`pre-commit`](https://pre-commit.com/) hooks.
 Full testing of the package can be done with
 [`nox`](https://nox.thea.codes/en/stable/index.html).
 
 Please feel free to raise issues on GitHub
-and open pull requests if you have a feature to be added. 
+and open pull requests if you have a feature to be added.
 Tests and adequate docstrings should be provided along with your new code.
