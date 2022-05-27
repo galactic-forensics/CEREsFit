@@ -19,16 +19,16 @@ class LinReg:
         >>> # some uncertainty and correlation
         >>> xunc = 0.05 * xdata
         >>> yunc = 0.073 * ydata
-        >>> rho = np.random.rand(len(xdata))
+        >>> rho = np.zeros_like(xdata) + 0.5
         >>> # do regression
         >>> my_reg = LinReg(xdata, xunc, ydata, yunc, rho)
-        >>> # print out the parameters
+        >>> # print out the parameters and their uncertainties
         >>> my_reg.slope
-        (0.9599664563964291, 0.06419460674496758)
+        (0.9983617286559998, 0.0684389236571533)
         >>> my_reg.intercept
-        (0.08884586942209394, 0.12640833698984266)
+        (0.05545339135826666, 0.11811730191506546)
         >>> my_reg.mswd
-        1.9884007545330427
+        2.5105964767246842
     """
 
     def __init__(
