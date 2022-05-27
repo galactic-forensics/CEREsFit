@@ -1,8 +1,5 @@
 """Test properties, error messages, etc. on Mahon Linear regression."""
 
-from pathlib import Path
-from typing import List
-
 import numpy as np
 import pytest
 

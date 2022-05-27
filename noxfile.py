@@ -3,7 +3,7 @@
 import nox
 
 
-nox.options.sessions = "lint", "tests", "safety"
+nox.options.sessions = "lint", "tests", "safety", "xdoctest"
 
 package = "mahon"
 locations = "mahon", "tests", "noxfile.py"
@@ -48,11 +48,11 @@ def safety(session):
     )
 
 
-# todo
 @nox.session(python=python_main)
 def xdoctest(session):
     """Test docstring examples with xdoctest."""
     args = session.posargs or ["all"]
     session.install("--upgrade", "pip")
-    session.install("xdoctest[all]", "-r", "requirements.txt")
+    session.install("xdoctest[all]")
+    session.install(".[dev,test]")
     session.run("python", "-m", "xdoctest", package, *args)

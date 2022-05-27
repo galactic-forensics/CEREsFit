@@ -10,8 +10,25 @@ from numpy.polynomial import Polynomial
 class LinReg:
     """Linear regression using (corrected) Mahon (1996) prescription.
 
-    Todo: add DOI of the paper, once published.
-    Todo: add Example of usage
+    Example:
+        >>> import numpy as np
+        >>> from mahon import LinReg
+        >>> # some data
+        >>> xdata = np.array([1, 2, 3.1, 4.9])
+        >>> ydata = np.array([1.1, 1.9, 3, 5.5])
+        >>> # some uncertainty and correlation
+        >>> xunc = 0.05 * xdata
+        >>> yunc = 0.073 * ydata
+        >>> rho = np.random.rand(len(xdata))
+        >>> # do regression
+        >>> my_reg = LinReg(xdata, xunc, ydata, yunc, rho)
+        >>> # print out the parameters
+        >>> my_reg.slope
+        (0.9599664563964291, 0.06419460674496758)
+        >>> my_reg.intercept
+        (0.08884586942209394, 0.12640833698984266)
+        >>> my_reg.mswd
+        1.9884007545330427
     """
 
     def __init__(
