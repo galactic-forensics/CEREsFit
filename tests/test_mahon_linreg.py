@@ -1,0 +1,59 @@
+"""Test properties, error messages, etc. on Mahon Linear regression."""
+
+from pathlib import Path
+from typing import List
+
+import numpy as np
+import pytest
+
+from mahon import LinReg
+from .test_mahon_linreg_datasets import read_dataset
+
+
+def test_linreg_fixpoint_value_error():
+    """Raise ValueError if fix point is of bad shape."""
+    some_arr = np.array([1, 2])
+    with pytest.raises(ValueError):
+        _ = LinReg(some_arr, some_arr, some_arr, some_arr, fixpt=42, autocalc=False)
+
+
+def test_linreg_keywords(ds_path):
+    """Ensure keywords are accepted by routine."""
+    case = "set1.csv"
+    ds = ds_path.joinpath(case)
+    xdat, xunc, ydat, yunc, rho, _, params_exp = read_dataset(ds)
+
+    reg_limit = 42
+    iter_max = 13
+    kwargs = {"regression_limit": reg_limit, "iter_max": iter_max}
+
+    reg = LinReg(xdat, xunc, ydat, yunc, rho=rho, autocalc=False, **kwargs)
+
+    assert reg.reg_limit == reg_limit
+    assert reg.iter_max == iter_max
+
+
+def test_linreg_iteration_warning(ds_path):
+    """Test that iteration throws a warning if runs out of max_iter."""
+    case = "set1.csv"
+    ds = ds_path.joinpath(case)
+    xdat, xunc, ydat, yunc, rho, _, params_exp = read_dataset(ds)
+    iter_max = 1
+
+    with pytest.warns(UserWarning):
+        _ = LinReg(xdat, xunc, ydat, yunc, rho=rho, iter_max=iter_max)
+
+
+def test_linreg_properties(ds_path):
+    """Test that properties return the correct parameters."""
+    case = "set1.csv"
+    ds = ds_path.joinpath(case)
+    xdat, xunc, ydat, yunc, rho, _, params_exp = read_dataset(ds)
+
+    ind_params = 0  # index of which parameters for given case
+
+    reg = LinReg(xdat, xunc, ydat, yunc, rho=rho)
+
+    assert params_exp[ind_params][0:2] == pytest.approx(reg.slope, abs=1e-6)
+    assert params_exp[ind_params][2:4] == pytest.approx(reg.intercept, abs=1e-6)
+    assert params_exp[ind_params][4] == pytest.approx(reg.mswd, abs=1e-3)

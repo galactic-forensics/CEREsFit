@@ -207,12 +207,12 @@ class LinReg:
         iter_cnt = 0
         b_old = self._slope
         b_new = iterate_b(b_old)
-        while np.abs(b_old - b_new) > self.reg_limit and iter_cnt <= self.iter_max:
+        while np.abs(b_old - b_new) > self.reg_limit and iter_cnt < self.iter_max:
             b_old = b_new
             b_new = iterate_b(b_old)
             iter_cnt += 1
 
-        if iter_cnt == self.iter_max:
+        if iter_cnt >= self.iter_max:
             warnings.warn(
                 f"Iteration count for slope optimization hit the limt at "
                 f"{self.iter_max}. The current difference between the old and new "
@@ -324,28 +324,24 @@ class LinReg:
         def calc_da_dxi(it: int):
             """Calculate partial derivative da/dxi.
 
+            This routine is only used when no fixed point is selected.
+
             :param it: Index where the $i$ is at.
 
             :return: da/dxi
             """
-            if self.fix_pt is None:
-                return (
-                    -b * weights[it] / sum_weights - xbar * calc_dtheta_dxi(it) / dthdb
-                )
-            else:
-                return -xbar * calc_dtheta_dxi(it) / dthdb
+            return -b * weights[it] / sum_weights - xbar * calc_dtheta_dxi(it) / dthdb
 
         def calc_da_dyi(it: int):
             """Calculate partial derivative da/dyi.
+
+            This routine is only used when no fixed point is selected.
 
             :param it: Index where the $i$ is at.
 
             :return: da/dyi
             """
-            if self.fix_pt is None:
-                return weights[it] / sum_weights - xbar * calc_dtheta_dyi(it) / dthdb
-            else:
-                return -xbar * calc_dtheta_dyi(it) / dthdb
+            return weights[it] / sum_weights - xbar * calc_dtheta_dyi(it) / dthdb
 
         # calculate uncertainty for slope
         sigb_sq = 0.0

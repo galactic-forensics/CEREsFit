@@ -49,6 +49,9 @@ def test_linreg_cases_a(case, ds_path):
     assert params_exp[ind_params][:4] == pytest.approx(reg.parameters[:4], abs=case[1])
     assert params_exp[ind_params][4] == pytest.approx(reg.parameters[4], rel=1e-3)
 
+    # check mswd and chi squared
+    assert reg.chi_squared == pytest.approx(reg.mswd * (len(xdat) - 2))
+
 
 @pytest.mark.parametrize("case", zip(DATASETS, PRECISION_ABS))
 def test_linreg_cases_b(case, ds_path):
@@ -74,3 +77,6 @@ def test_linreg_cases_c(case, ds_path):
     reg = LinReg(xdat, xunc, ydat, yunc, rho=rho, fixpt=fixpt)
     assert params_exp[ind_params][:4] == pytest.approx(reg.parameters[:4], abs=case[1])
     assert params_exp[ind_params][4] == pytest.approx(reg.parameters[4], rel=1e-3)
+
+    # check mswd and chi squared
+    assert reg.chi_squared == pytest.approx(reg.mswd * (len(xdat) - 1))
