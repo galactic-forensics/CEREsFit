@@ -67,3 +67,20 @@ def test_linreg_mswd_ci():
 
     mswd_ci_rec = reg.mswd_ci()
     assert mswd_ci_exp == pytest.approx(mswd_ci_rec)
+
+
+def test_linreg_regression_line():
+    """Get a regression line for the specified values."""
+    some_arr = np.array([1, 2])
+
+    reg = LinReg(some_arr, some_arr, some_arr, some_arr, auto=False)
+    reg._slope = 3.14
+    reg._intercept = 12.0
+
+    xdat_exp = np.array([1, 2])
+    ydat_exp = xdat_exp * reg._slope + reg._intercept
+
+    xdat_rec, ydat_rec = reg.regression_line()
+
+    assert xdat_rec == pytest.approx(xdat_exp)
+    assert ydat_rec == pytest.approx(ydat_exp)

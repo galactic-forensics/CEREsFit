@@ -487,6 +487,22 @@ class LinReg:
             siga_sq = self.fix_pt[0] ** 2 * sigb_sq
         self._intercept_unc = np.sqrt(siga_sq)
 
+    def regression_line(
+        self, xrange: np.ndarray = None
+    ) -> Tuple[np.ndarray, np.ndarray]:
+        """Return xdata and ydata for the calculated regression line for plotting.
+
+        :param xrange: Range for which to calculate the regression. Default: ``None``.
+            If None, defaults to min and max of x values that are defined.
+
+        :return: xdata to plot, ydata to plot regression line.
+        """
+        if xrange is None:
+            xrange = np.array([self.xdat.min(), self.xdat.max()])
+
+        ydat = self._slope * xrange + self._intercept
+        return xrange, ydat
+
 
 def kron_delta(
     ind1: Union[int, np.ndarray], ind2: Union[int, np.ndarray]
