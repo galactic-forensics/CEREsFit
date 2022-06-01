@@ -54,9 +54,9 @@ Below is an example on how to use the package.
 2.5105964767246842
 ```
 
-A detailed example for correlated and uncorrelated uncertainties,
-and fixed point linear regressions can be found
-[in this Jupyter notebook](https://github.com/galactic-forensics/mahon/blob/main/examples/mahon_example_data_set_1.ipynb).
+Detailed example on how to use the class for fitting and plotting the results
+can be found
+[in this Jupyter notebook](https://github.com/galactic-forensics/mahon/tree/main/examples).
 
 
 ## Development & Contributing

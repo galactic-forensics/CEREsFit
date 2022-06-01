@@ -6,6 +6,7 @@ import warnings
 import numpy as np
 from numpy.polynomial import Polynomial
 import scipy.stats as stats
+from scipy.stats.distributions import chi2
 
 
 class LinReg:
@@ -76,7 +77,8 @@ class LinReg:
                 raise ValueError("Fix point must be of the form [x_fix, yfix].")
         self.fix_pt = fixpt
 
-        # Initialize the slope and intercept
+        # Initialize the parameters to be returned
+        self._dof = None
         self._slope = None
         self._slope_unc = None
         self._intercept = None
@@ -106,6 +108,11 @@ class LinReg:
     def chi_squared(self) -> float:
         """Return chi_squared of the regression."""
         return self._chi_squared
+
+    @property
+    def dof(self) -> int:
+        """Return the degrees of freedom of the system."""
+        return self._dof
 
     @property
     def intercept(self) -> Tuple[float, float]:
@@ -184,11 +191,26 @@ class LinReg:
         self._chi_squared = chi_sq
 
         dof = len(self.xdat) - 2 if self.fix_pt is None else len(self.xdat) - 1
+        self._dof = dof
         self._mswd = chi_sq / dof
 
     def intercept_calculation(self):
         """Calculate the intercept."""
         self._intercept = self.ybar - self._slope * self.xbar
+
+    def mswd_ci(self, p_conf=0.95) -> Tuple[float, float]:
+        """Calculate confidence interval of MSWD value given degrees of freedom of.
+
+        :param p_conf: Confidence level, defaults to 0.95 (95%)
+
+        :return: Confidence interval for the MSWD inside this interval.
+        """
+        dof = self.dof
+        right_tail = 1 - (1 - p_conf) / 2
+        left_tail = 1 - right_tail
+        mswd_lower = chi2.ppf(left_tail, dof) / dof
+        mswd_upper = chi2.ppf(right_tail, dof) / dof
+        return mswd_lower, mswd_upper
 
     def slope_calculation(self):
         """Iterate the slope until it fits."""

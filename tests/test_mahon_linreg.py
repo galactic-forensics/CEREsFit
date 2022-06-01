@@ -54,3 +54,16 @@ def test_linreg_properties(ds_path):
     assert params_exp[ind_params][0:2] == pytest.approx(reg.slope, abs=1e-6)
     assert params_exp[ind_params][2:4] == pytest.approx(reg.intercept, abs=1e-6)
     assert params_exp[ind_params][4] == pytest.approx(reg.mswd, abs=1e-3)
+
+
+def test_linreg_mswd_ci():
+    """Confidence intervals for MSWD."""
+    dof = 9
+    mswd_ci_exp = 0.300043277775595, 2.11364086651574
+    some_arr = np.array([1, 2])
+
+    reg = LinReg(some_arr, some_arr, some_arr, some_arr, auto=False)
+    reg._dof = dof
+
+    mswd_ci_rec = reg.mswd_ci()
+    assert mswd_ci_exp == pytest.approx(mswd_ci_rec)

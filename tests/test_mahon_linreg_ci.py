@@ -66,7 +66,7 @@ def test_linreg_uncertainty_band_calc(stephan_ci_data):
 
 
 def test_linreg_uncertainty_band_sigma(stephan_ci_data):
-    """Enusre that 2 sigma band is twice as wide than 1 sigma band."""
+    """Ensure that 2 sigma band is twice as wide than 1 sigma band."""
     xdat, sigx, ydat, sigy, rho, _, _, _ = stephan_ci_data
 
     my_reg = LinReg(xdat, sigx, ydat, sigy, rho, autocalc=False)
