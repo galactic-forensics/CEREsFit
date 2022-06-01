@@ -156,7 +156,7 @@ class LinReg:
     def confidence_intervals(
         self,
         p_conf: float = 0.95,
-        xrange: np.ndarray[float, float] = None,
+        xrange: np.ndarray = None,
         bins: int = 100,
     ) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
         """Calculate the confidence intervals and return them.
@@ -302,7 +302,7 @@ class LinReg:
     def uncertainty_band(
         self,
         sigma=1,
-        xrange: np.ndarray[float, float] = None,
+        xrange: np.ndarray = None,
         bins: int = 100,
     ) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
         """Calculate the uncertainty bands and return them.
