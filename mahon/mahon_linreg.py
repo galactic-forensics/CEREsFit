@@ -5,6 +5,7 @@ import warnings
 
 import numpy as np
 from numpy.polynomial import Polynomial
+import scipy.stats as stats
 
 
 class LinReg:
@@ -145,6 +146,36 @@ class LinReg:
         self.unc_calculation()
         self.goodness_of_fit()
 
+    def confidence_intervals(
+        self,
+        p_conf: float = 0.95,
+        xrange: np.ndarray[float, float] = None,
+        bins: int = 100,
+    ) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
+        """Calculate the confidence intervals and return them.
+
+        :param p_conf: Confidence interval, default 95% (``p_conf=0.95``).
+        :param xrange: Range from where to where to calculate CI. Default ``None``.
+            If None, defaults to min and max of x values that are defined.
+        :param bins: Number of bins to calculate, defaults to 100.
+
+        :return: Data to plot CI: xdata, y_ci_minimum, y_ci_maximum
+        """
+        xax_ci, yax_ub_min, yax_ub_max = self.uncertainty_band(
+            sigma=1, xrange=xrange, bins=bins
+        )
+
+        yax_ci = np.abs(yax_ub_max - yax_ub_min) / 2.0
+
+        # now create the confidence interval that we need for double tailed distribution
+        zfac = stats.t.ppf(1 - (1 - p_conf) / 2.0, len(self.xdat) - 2)
+        yax_ci *= zfac
+
+        yax_ci_min = xax_ci * self.slope[0] + self.intercept[0] - yax_ci
+        yax_ci_max = xax_ci * self.slope[0] + self.intercept[0] + yax_ci
+
+        return xax_ci, yax_ci_min, yax_ci_max
+
     def goodness_of_fit(self):
         """Calculate goodness of fit parameters chi-squared and MSWD."""
         chi_sq = np.sum(
@@ -245,6 +276,49 @@ class LinReg:
         """Calculate an initial guess of the slope without uncertainties and save it."""
         polyfit = Polynomial.fit(self.xdat, self.ydat, deg=1)
         self._slope = polyfit.convert().coef[1]
+
+    def uncertainty_band(
+        self,
+        sigma=1,
+        xrange: np.ndarray[float, float] = None,
+        bins: int = 100,
+    ) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
+        """Calculate the uncertainty bands and return them.
+
+        :param sigma: How many sigma should the band be? Default: 1
+        :param xrange: Range from where to where to band. Default ``None``.
+            If None, defaults to min and max of x values that are defined.
+        :param bins: Number of bins to calculate, defaults to 100.
+
+        :return: Data to plot band: xdata, y_ub_minimum, y_ub_maximum
+        """
+        if xrange is None:
+            xax_ci = np.linspace(np.min(self.xdat), np.max(self.xdat), bins)
+        else:
+            xax_ci = np.linspace(xrange[0], xrange[1], bins)
+
+        xdat_save = self.xdat.copy()
+
+        yax_ub = np.zeros(bins)
+        for it, deltax in enumerate(xax_ci):
+            self.xdat = xdat_save - deltax
+            self.slope_initial_guess()
+            self.slope_calculation()
+            self.intercept_calculation()
+            self.unc_calculation()
+            yax_ub[it] = self.intercept[1]
+
+        # mulitply with sigma
+        yax_ub *= sigma
+
+        # reset all calculations
+        self.xdat = xdat_save
+        self.calculate()
+
+        yax_ub_min = xax_ci * self.slope[0] + self.intercept[0] - yax_ub
+        yax_ub_max = xax_ci * self.slope[0] + self.intercept[0] + yax_ub
+
+        return xax_ci, yax_ub_min, yax_ub_max
 
     def unc_calculation(self):
         """Calculate uncertainties for slope and intercept with no fixed point."""

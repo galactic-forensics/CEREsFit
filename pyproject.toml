@@ -16,7 +16,7 @@ classifiers = [
     "Topic :: Scientific/Engineering",
     "Topic :: Scientific/Engineering :: Physics",
 ]
-dependencies = ["numpy"]
+dependencies = ["numpy", "scipy"]
 dynamic = ["version", "description"]
 license = {file = "LICENSE"}
 name = "mahon"
