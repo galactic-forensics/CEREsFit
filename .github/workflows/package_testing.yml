@@ -31,7 +31,7 @@ jobs:
         pip install coveralls
         pip install .[test]
     - name: Run nox
-      run: nox
+      run: nox --no-error-on-missing-interpreters
     - name: Re-run coverage and push to coveralls
       env:
         COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
