@@ -3,7 +3,7 @@
 import nox
 
 
-nox.options.sessions = "lint", "tests", "safety", "xdoctest"
+nox.options.sessions = "lint", "tests", "xdoctest"
 
 package = "curefit"
 locations = "curefit", "tests", "noxfile.py"
