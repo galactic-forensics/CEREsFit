@@ -7,7 +7,7 @@ nox.options.sessions = "lint", "tests", "xdoctest"
 
 package = "curefit"
 locations = "curefit", "tests", "noxfile.py"
-python_suite = ["3.10", "3.9", "3.8"]
+python_suite = ["3.11", "3.10", "3.9", "3.8"]
 python_main = "3.10"
 
 
