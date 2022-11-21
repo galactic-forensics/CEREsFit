@@ -22,7 +22,7 @@ is also provided.
 The package can be installed from `pypi` via:
 
 ```
-pip install curefit 
+pip install curefit
 ```
 
 ## Usage
