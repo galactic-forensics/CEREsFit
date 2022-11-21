@@ -1,9 +1,9 @@
-# Mahon linear regression
+# CUREFit linear regression
 
-[![pypi](https://img.shields.io/pypi/v/mahon?color=informational)](https://pypi.org/project/mahon/)
-[![tests](https://github.com/galactic-forensics/mahon/actions/workflows/package_testing.yml/badge.svg)](https://github.com/galactic-forensics/mahon/actions/workflows/package_testing.yml)
-[![Coverage Status](https://coveralls.io/repos/github/galactic-forensics/mahon/badge.svg)](https://coveralls.io/github/galactic-forensics/mahon)
-[![pre-commit.ci status](https://results.pre-commit.ci/badge/github/galactic-forensics/mahon/main.svg)](https://results.pre-commit.ci/latest/github/galactic-forensics/mahon/main)
+[![pypi](https://img.shields.io/pypi/v/curefit?color=informational)](https://pypi.org/project/curefit/)
+[![tests](https://github.com/galactic-forensics/CUREFit/actions/workflows/package_testing.yml/badge.svg)](https://github.com/galactic-forensics/CUREFit/actions/workflows/package_testing.yml)
+[![Coverage Status](https://coveralls.io/repos/github/galactic-forensics/CUREFit/badge.svg)](https://coveralls.io/github/galactic-forensics/CUREFit)
+[![pre-commit.ci status](https://results.pre-commit.ci/badge/github/galactic-forensics/CUREFit/main.svg)](https://results.pre-commit.ci/latest/github/galactic-forensics/CUREFit/main)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
@@ -22,7 +22,7 @@ is also provided.
 The package can be installed from `pypi` via:
 
 ```
-pip install mahon
+pip install curefit 
 ```
 
 ## Usage
@@ -31,7 +31,7 @@ Below is an example on how to use the package.
 
 ```python
 >>> import numpy as np
->>> from mahon import LinReg
+>>> from curefit import LinReg
 
 >>> # some data
 >>> xdata = np.array([1, 2, 3.1, 4.9])
@@ -56,7 +56,7 @@ Below is an example on how to use the package.
 
 Detailed example on how to use the class for fitting and plotting the results
 can be found
-[in this Jupyter notebook](https://github.com/galactic-forensics/mahon/tree/main/examples).
+[in this Jupyter notebook](https://github.com/galactic-forensics/CUREFit/tree/main/examples).
 
 
 ## Development & Contributing

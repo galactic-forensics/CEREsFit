@@ -19,12 +19,12 @@ classifiers = [
 dependencies = ["numpy", "scipy"]
 dynamic = ["version", "description"]
 license = {file = "LICENSE"}
-name = "mahon"
+name = "curefit"
 readme = "README.md"
 requires-python=">=3.8"
 
 [project.urls]
-Home = "https://github.com/galactic-forensics/mahon"
+Home = "https://github.com/galactic-forensics/CUREFit"
 
 [project.optional-dependencies]
 dev = [
@@ -49,5 +49,5 @@ exclude = ["examples/"]
 
 [tool.pytest.ini_options]
 minversion = "6.0"
-addopts = "--cov=mahon -v"
+addopts = "--cov=curefit -v"
 testpaths = "tests"

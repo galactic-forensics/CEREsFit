@@ -1,19 +1,19 @@
 """Linear regression of data sets with correlated and uncorrelated uncertainties."""
 
-from .mahon_linreg import LinReg
+from .curefit_linreg import LinReg
 
 # Package information
 __version__ = "0.2.0"
 __all__ = ["LinReg"]
 
-__title__ = "mahon"
+__title__ = "curefit"
 __description__ = (
     "Linear regression of data sets with correlated and uncorrelated uncertainties."
     "Methodology follows the work of Mahon (1996) with correction for errors. For "
-    "details, see the readme file on https://github.com/galactic-forensics/mahon."
+    "details, see the readme file on https://github.com/galactic-forensics/CUREFit."
 )
 
-__uri__ = "https://github.com/galactic-forensics/mahon"
+__uri__ = "https://github.com/galactic-forensics/CUREFit"
 __author__ = "Reto Trappitsch"
 __email__ = "reto@galactic-forensics.space"
 

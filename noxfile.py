@@ -5,8 +5,8 @@ import nox
 
 nox.options.sessions = "lint", "tests", "safety", "xdoctest"
 
-package = "mahon"
-locations = "mahon", "tests", "noxfile.py"
+package = "curefit"
+locations = "curefit", "tests", "noxfile.py"
 python_suite = ["3.10", "3.9", "3.8"]
 python_main = "3.10"
 

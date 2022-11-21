@@ -14,7 +14,7 @@ class LinReg:
 
     Example:
         >>> import numpy as np
-        >>> from mahon import LinReg
+        >>> from curefit import LinReg
         >>> # some data
         >>> xdata = np.array([1, 2, 3.1, 4.9])
         >>> ydata = np.array([1.1, 1.9, 3, 5.5])

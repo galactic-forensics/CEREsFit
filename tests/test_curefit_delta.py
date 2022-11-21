@@ -3,7 +3,7 @@
 import numpy as np
 import pytest
 
-from mahon.mahon_linreg import kron_delta
+from curefit.curefit_linreg import kron_delta
 
 
 def test_kron_delta():

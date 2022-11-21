@@ -1,1 +1,1 @@
-"""Tests for the mahon package."""
+"""Tests for the curefit package."""
