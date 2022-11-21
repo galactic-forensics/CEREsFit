@@ -2,7 +2,7 @@
 
 [![pypi](https://img.shields.io/pypi/v/curefit?color=informational)](https://pypi.org/project/curefit/)
 [![tests](https://github.com/galactic-forensics/CUREFit/actions/workflows/package_testing.yml/badge.svg)](https://github.com/galactic-forensics/CUREFit/actions/workflows/package_testing.yml)
-[![Coverage Status](https://coveralls.io/repos/github/galactic-forensics/CUREFit/badge.svg)](https://coveralls.io/github/galactic-forensics/CUREFit)
+[![codecov](https://codecov.io/gh/galactic-forensics/CUREFit/branch/main/graph/badge.svg?token=C8KN5UE831)](https://codecov.io/gh/galactic-forensics/CUREFit)
 [![pre-commit.ci status](https://results.pre-commit.ci/badge/github/galactic-forensics/CUREFit/main.svg)](https://results.pre-commit.ci/latest/github/galactic-forensics/CUREFit/main)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
