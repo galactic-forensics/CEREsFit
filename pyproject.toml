@@ -50,5 +50,5 @@ exclude = ["examples/"]
 
 [tool.pytest.ini_options]
 minversion = "6.0"
-addopts = "--cov=curefit -v"
+addopts = "--cov=curefit --cov-report=xml"
 testpaths = "tests"

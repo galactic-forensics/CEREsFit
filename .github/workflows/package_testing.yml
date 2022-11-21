@@ -28,13 +28,19 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install nox
-        pip install coveralls
         pip install .[test]
     - name: Run nox
       run: nox --no-error-on-missing-interpreters
-    - name: Re-run coverage and push to coveralls
-      env:
-        COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
-      run: |
-        pytest
-        coveralls
+    - name: Generate coverage report
+      run: pytest
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v3
+      with:
+        directory: ./coverage/reports/
+        env_vars: OS,PYTHON
+        fail_ci_if_error: true
+        files: ./coverage.xml
+        flags: unittests
+        name: codecov-umbrella
+        path_to_write_report: ./coverage/codecov_report.txt
+        verbose: true
