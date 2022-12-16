@@ -37,7 +37,7 @@ def read_dataset(ds: Path) -> List[np.ndarray]:
     return ret_data
 
 
-@pytest.mark.parametrize("case", zip(DATASETS, PRECISION_ABS))
+@pytest.mark.parametrize("case", zip(DATASETS, PRECISION_ABS, strict=True))
 def test_linreg_cases_a(case, ds_path):
     """Comparpe cases with correlated uncertainties, no fixed point (sets a)."""
     ds = ds_path.joinpath(case[0])
@@ -53,7 +53,7 @@ def test_linreg_cases_a(case, ds_path):
     assert reg.chi_squared == pytest.approx(reg.mswd * (len(xdat) - 2))
 
 
-@pytest.mark.parametrize("case", zip(DATASETS, PRECISION_ABS))
+@pytest.mark.parametrize("case", zip(DATASETS, PRECISION_ABS, strict=True))
 def test_linreg_cases_b(case, ds_path):
     """Comparpe cases with uncorrelated uncertainties, no fixed point (sets b)."""
     ds = ds_path.joinpath(case[0])
@@ -66,7 +66,7 @@ def test_linreg_cases_b(case, ds_path):
     assert params_exp[ind_params][4] == pytest.approx(reg.parameters[4], rel=1e-3)
 
 
-@pytest.mark.parametrize("case", zip(DATASETS, PRECISION_ABS))
+@pytest.mark.parametrize("case", zip(DATASETS, PRECISION_ABS, strict=True))
 def test_linreg_cases_c(case, ds_path):
     """Comparpe cases with correlated uncertainties, with fixed point (sets c)."""
     ds = ds_path.joinpath(case[0])
