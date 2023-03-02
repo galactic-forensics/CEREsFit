@@ -90,7 +90,7 @@ class LinReg:
         if "regression_limit" in kwargs:
             self.reg_limit = kwargs["regression_limit"]
         else:
-            self.reg_limit = 1e-6
+            self.reg_limit = 1e-8
         if "iter_max" in kwargs:
             self.iter_max = kwargs["iter_max"]
         else:
@@ -358,21 +358,53 @@ class LinReg:
 
         sum_weights = np.sum(weights)
 
+        # sums over j in equation 60, last two lines
+        sum_j_u = np.sum(weights**2 * u_all * (sigxy - b * sigx**2))
+        sum_j_v = np.sum(weights**2 * v_all * (sigxy - b * sigx**2))
+
         # d(theta) / db
-        dthdb = np.sum(
-            weights**2
-            * (
-                2 * b * (u_all * v_all * sigx**2 - u_all**2 * sigxy)
-                + (u_all**2 * sigy**2 - v_all**2 * sigx**2)
+        dthdb = (
+            np.sum(
+                weights**2
+                * (
+                    2 * b * (u_all * v_all * sigx**2 - u_all**2 * sigxy)
+                    + (u_all**2 * sigy**2 - v_all**2 * sigx**2)
+                )
             )
-        ) + 4 * np.sum(
-            weights**3
-            * (sigxy - b * sigx**2)
-            * (
-                b**2 * (u_all * v_all * sigx**2 - u_all**2 * sigxy)
-                + b * (u_all**2 * sigy**2 - v_all**2 * sigx**2)
-                - (u_all * v_all * sigy**2 - v_all**2 * sigxy)
+            + 4
+            * np.sum(
+                weights**3
+                * (sigxy - b * sigx**2)
+                * (
+                    b**2 * (u_all * v_all * sigx**2 - u_all**2 * sigxy)
+                    + b * (u_all**2 * sigy**2 - v_all**2 * sigx**2)
+                    - (u_all * v_all * sigy**2 - v_all**2 * sigxy)
+                )
             )
+            + 2
+            * np.sum(
+                weights**2
+                * (
+                    -(b**2) * u_all * sigx**2
+                    + 2 * b * v_all * sigx**2
+                    + u_all * sigy**2
+                    - 2 * v_all * sigxy
+                )
+            )
+            * sum_j_v
+            / sum_weights
+            + 2
+            * np.sum(
+                weights**2
+                * (
+                    -(b**2) * v_all * sigx**2
+                    + 2 * b**2 * u_all * sigxy
+                    - 2 * b * u_all * sigy**2
+                    + v_all * sigy**2
+                )
+            )
+            * sum_j_u
+            / sum_weights
         )
 
         def calc_dtheta_dxi(it: int):

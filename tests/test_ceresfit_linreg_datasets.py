@@ -11,7 +11,7 @@ from ceresfit import LinReg
 
 DATASETS = ["set1.csv", "set2.csv", "set3.csv", "set4.csv", "set5.csv"]
 # absolute precision for comparison of non MSWD parameters
-PRECISION_ABS = [1e-6, 1e-4, 1e-4, 1e-3, 1e-4]
+PRECISION_ABS = [1e-5, 1e-4, 1e-5, 1e-3, 1e-4]
 
 
 def read_dataset(ds: Path) -> List[np.ndarray]:
