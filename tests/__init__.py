@@ -1,1 +1,1 @@
-"""Tests for the curefit package."""
+"""Tests for the ceresfit package."""

@@ -6,7 +6,7 @@ from typing import List
 import numpy as np
 import pytest
 
-from curefit import LinReg
+from ceresfit import LinReg
 
 
 DATASETS = ["set1.csv", "set2.csv", "set3.csv", "set4.csv", "set5.csv"]

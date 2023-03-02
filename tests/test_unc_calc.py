@@ -3,7 +3,7 @@
 import numpy as np
 import pytest
 
-from curefit import unc_calc as uc
+from ceresfit import unc_calc as uc
 
 
 def test_error_bar_angle_length_single():

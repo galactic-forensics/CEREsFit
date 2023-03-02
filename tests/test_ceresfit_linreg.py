@@ -3,8 +3,8 @@
 import numpy as np
 import pytest
 
-from curefit import LinReg
-from .test_curefit_linreg_datasets import read_dataset
+from ceresfit import LinReg
+from .test_ceresfit_linreg_datasets import read_dataset
 
 
 def test_linreg_fixpoint_value_error():
