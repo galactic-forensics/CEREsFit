@@ -4,7 +4,7 @@ import numpy as np
 import pytest
 import scipy.stats as stats
 
-from curefit import LinReg
+from ceresfit import LinReg
 
 
 # STEPHAN TEST DATASET FROM MACRO

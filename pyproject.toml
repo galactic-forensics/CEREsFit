@@ -20,12 +20,12 @@ classifiers = [
 dependencies = ["numpy", "scipy"]
 dynamic = ["version", "description"]
 license = {file = "LICENSE"}
-name = "curefit"
+name = "ceresfit"
 readme = "README.md"
 requires-python=">=3.8"
 
 [project.urls]
-Home = "https://github.com/galactic-forensics/CUREFit"
+Home = "https://github.com/galactic-forensics/CEREsFit"
 
 [project.optional-dependencies]
 dev = [
@@ -50,5 +50,5 @@ exclude = ["examples/"]
 
 [tool.pytest.ini_options]
 minversion = "6.0"
-addopts = "--cov=curefit --cov-report=xml"
+addopts = "--cov=ceresfit --cov-report=xml"
 testpaths = "tests"

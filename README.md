@@ -1,18 +1,19 @@
-# CUREFit linear regression
+# CEREsFit
 
-[![pypi](https://img.shields.io/pypi/v/curefit?color=informational)](https://pypi.org/project/curefit/)
-[![tests](https://github.com/galactic-forensics/CUREFit/actions/workflows/package_testing.yml/badge.svg)](https://github.com/galactic-forensics/CUREFit/actions/workflows/package_testing.yml)
-[![codecov](https://codecov.io/gh/galactic-forensics/CUREFit/branch/main/graph/badge.svg?token=C8KN5UE831)](https://codecov.io/gh/galactic-forensics/CUREFit)
-[![pre-commit.ci status](https://results.pre-commit.ci/badge/github/galactic-forensics/CUREFit/main.svg)](https://results.pre-commit.ci/latest/github/galactic-forensics/CUREFit/main)
+[![pypi](https://img.shields.io/pypi/v/ceresfit?color=informational)](https://pypi.org/project/ceresfit/)
+[![tests](https://github.com/galactic-forensics/CEREsFit/actions/workflows/package_testing.yml/badge.svg)](https://github.com/galactic-forensics/CEREsFit/actions/workflows/package_testing.yml)
+[![codecov](https://codecov.io/gh/galactic-forensics/CEREsFit/branch/main/graph/badge.svg?token=C8KN5UE831)](https://codecov.io/gh/galactic-forensics/CEREsFit)
+[![pre-commit.ci status](https://results.pre-commit.ci/badge/github/galactic-forensics/CEREsFit/main.svg)](https://results.pre-commit.ci/latest/github/galactic-forensics/CEREsFit/main)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
-The goal of this project is to provide a python package
+The goal of CEREsFit (Correlated Errors Regression Estimate Fit)
+is to provide a python package
 that allows to calculate linear regressions on data sets with uncertainties.
 Linear regressions can be performed for correlated and uncorrelated uncertainties.
 The calculations follow the methodology published by
 [Mahon (1996)](https://doi.org/10.1080/00206819709465336).
-Typographical errors that were made in that work have been corrected.
+Errors that were made in that work have been corrected.
 A method to allow calculating a linear regression through a fixed point,
 avoiding previously made errors,
 is also provided.
@@ -22,7 +23,7 @@ is also provided.
 The package can be installed from `pypi` via:
 
 ```
-pip install curefit
+pip install ceresfit
 ```
 
 ## Usage
@@ -31,21 +32,21 @@ Below is an example on how to use the package.
 
 ```python
 >>> import numpy as np
->>> from curefit import LinReg
+>>> from ceresfit import LinReg
 
->>> # some data
+>>>  # some data
 >>> xdata = np.array([1, 2, 3.1, 4.9])
 >>> ydata = np.array([1.1, 1.9, 3, 5.5])
 
->>> # some uncertainty and correlation
+>>>  # some uncertainty and correlation
 >>> xunc = 0.05 * xdata
 >>> yunc = 0.073 * ydata
 >>> rho = np.zeros_like(xdata) + 0.5
 
->>> # do regression
+>>>  # do regression
 >>> my_reg = LinReg(xdata, xunc, ydata, yunc, rho)
 
->>> # print out the parameters and their uncertainties
+>>>  # print out the parameters and their uncertainties
 >>> my_reg.slope
 (0.9983617286559998, 0.0684389236571533)
 >>> my_reg.intercept
@@ -56,7 +57,7 @@ Below is an example on how to use the package.
 
 Detailed example on how to use the class for fitting and plotting the results
 can be found
-[in this Jupyter notebook](https://github.com/galactic-forensics/CUREFit/tree/main/examples).
+[in this Jupyter notebook](https://github.com/galactic-forensics/CEREsFit/tree/main/examples).
 
 
 ## Development & Contributing

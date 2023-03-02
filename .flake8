@@ -6,7 +6,7 @@ ignore = E203,E501,W503
 max-line-length = 88
 
 # import order
-application-import-names = curefit,tests
+application-import-names = ceresfit,tests
 import-order-style = google
 
 # bandit: exclude test cases

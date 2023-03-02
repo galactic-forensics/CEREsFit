@@ -14,7 +14,7 @@ class LinReg:
 
     Example:
         >>> import numpy as np
-        >>> from curefit import LinReg
+        >>> from ceresfit import LinReg
         >>> # some data
         >>> xdata = np.array([1, 2, 3.1, 4.9])
         >>> ydata = np.array([1.1, 1.9, 3, 5.5])
@@ -286,7 +286,8 @@ class LinReg:
             warnings.warn(
                 f"Iteration count for slope optimization hit the limt at "
                 f"{self.iter_max}. The current difference between the old and new "
-                f"slope is {np.abs(b_old - b_new)}"
+                f"slope is {np.abs(b_old - b_new)}",
+                stacklevel=1,
             )
 
         self._slope = b_new
