@@ -26,11 +26,11 @@ class LinReg:
         >>> my_reg = LinReg(xdata, xunc, ydata, yunc, rho)
         >>> # print out the parameters and their uncertainties
         >>> my_reg.slope
-        (0.9983617286559998, 0.0684389236571533)
+        (0.9983613298400896, 0.06844666435449052)
         >>> my_reg.intercept
-        (0.05545339135826666, 0.11811730191506546)
+        (0.05545398718611372, 0.11812746374874884)
         >>> my_reg.mswd
-        2.5105964767246842
+        2.5105964767071143
     """
 
     def __init__(
