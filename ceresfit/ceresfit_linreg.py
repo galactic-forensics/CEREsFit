@@ -90,7 +90,7 @@ class LinReg:
         if "regression_limit" in kwargs:
             self.reg_limit = kwargs["regression_limit"]
         else:
-            self.reg_limit = 1e-8
+            self.reg_limit = 1e-12
         if "iter_max" in kwargs:
             self.iter_max = kwargs["iter_max"]
         else:
@@ -344,6 +344,17 @@ class LinReg:
         return xax_ci, yax_ub_min, yax_ub_max
 
     def unc_calculation(self):
+        """Uncertainty calculation.
+
+        This method is called by the ``calculate`` method and simply calls the
+        ``unc_calculation_no_fix_point`` or ``unc_calculation_fix_point`` method.
+        """
+        if self.fix_pt is None:
+            self.unc_calculation_no_fix_point()
+        else:
+            self.unc_calculation_fix_point()
+
+    def unc_calculation_no_fix_point(self):
         """Calculate uncertainties for slope and intercept with no fixed point."""
         # helper variables
         sigx = self.sigx
@@ -414,28 +425,20 @@ class LinReg:
 
             :return: dtheta/dxi
             """
-            if self.fix_pt is None:
-                sum_all = 0.0
-                for jt, wj in enumerate(weights):
-                    kron = kron_delta(it, jt)
-                    sum_all += (
-                        wj**2
-                        * (kron - weights[it] / sum_weights)
-                        * (
-                            b**2 * v_all[jt] * sigx[jt] ** 2
-                            - b**2 * 2 * u_all[jt] * sigxy[jt]
-                            + 2 * b * u_all[jt] * sigy[jt] ** 2
-                            - v_all[jt] * sigy[jt] ** 2
-                        )
+            sum_all = 0.0
+            for jt, wj in enumerate(weights):
+                kron = kron_delta(it, jt)
+                sum_all += (
+                    wj**2
+                    * (kron - weights[it] / sum_weights)
+                    * (
+                        b**2 * v_all[jt] * sigx[jt] ** 2
+                        - b**2 * 2 * u_all[jt] * sigxy[jt]
+                        + 2 * b * u_all[jt] * sigy[jt] ** 2
+                        - v_all[jt] * sigy[jt] ** 2
                     )
-                return sum_all
-            else:
-                return weights[it] ** 2 * (
-                    b**2 * v_all[it] * sigx[it] ** 2
-                    - b**2 * 2 * u_all[it] * sigxy[it]
-                    + 2 * b * u_all[it] * sigy[it] ** 2
-                    - v_all[it] * sigy[it] ** 2
                 )
+            return sum_all
 
         def calc_dtheta_dyi(it: int):
             """Calculate partial derivative d(theta)/dyi.
@@ -444,28 +447,20 @@ class LinReg:
 
             :return: dtheta/dyi
             """
-            if self.fix_pt is None:
-                sum_all = 0.0
-                for jt, wj in enumerate(weights):
-                    kron = kron_delta(it, jt)
-                    sum_all += (
-                        wj**2
-                        * (kron - weights[it] / sum_weights)
-                        * (
-                            b**2 * u_all[jt] * sigx[jt] ** 2
-                            - 2 * b * v_all[jt] * sigx[jt] ** 2
-                            - u_all[jt] * sigy[jt] ** 2
-                            + 2 * v_all[jt] * sigxy[jt]
-                        )
+            sum_all = 0.0
+            for jt, wj in enumerate(weights):
+                kron = kron_delta(it, jt)
+                sum_all += (
+                    wj**2
+                    * (kron - weights[it] / sum_weights)
+                    * (
+                        b**2 * u_all[jt] * sigx[jt] ** 2
+                        - 2 * b * v_all[jt] * sigx[jt] ** 2
+                        - u_all[jt] * sigy[jt] ** 2
+                        + 2 * v_all[jt] * sigxy[jt]
                     )
-                return sum_all
-            else:
-                return weights[it] ** 2 * (
-                    b**2 * u_all[it] * sigx[it] ** 2
-                    - 2 * b * v_all[it] * sigx[it] ** 2
-                    - u_all[it] * sigy[it] ** 2
-                    + 2 * v_all[it] * sigxy[it]
                 )
+            return sum_all
 
         def calc_da_dxi(it: int):
             """Calculate partial derivative da/dxi.
@@ -504,20 +499,94 @@ class LinReg:
         sigb_sq /= dthdb**2
         self._slope_unc = np.sqrt(sigb_sq)
 
-        if self.fix_pt is None:
-            siga_sq = 0.0
-            for it, sigxi in enumerate(sigx):
-                sigyi = sigy[it]
-                sigxyi = sigxy[it]
-                da_dxi = calc_da_dxi(it)
-                da_dyi = calc_da_dyi(it)
-                siga_sq += (
-                    da_dxi**2 * sigxi**2
-                    + da_dyi**2 * sigyi**2
-                    + 2 * sigxyi * da_dxi * da_dyi
-                )
-        else:
-            siga_sq = self.fix_pt[0] ** 2 * sigb_sq
+        siga_sq = 0.0
+        for it, sigxi in enumerate(sigx):
+            sigyi = sigy[it]
+            sigxyi = sigxy[it]
+            da_dxi = calc_da_dxi(it)
+            da_dyi = calc_da_dyi(it)
+            siga_sq += (
+                da_dxi**2 * sigxi**2
+                + da_dyi**2 * sigyi**2
+                + 2 * sigxyi * da_dxi * da_dyi
+            )
+        self._intercept_unc = np.sqrt(siga_sq)
+
+    def unc_calculation_fix_point(self):
+        """Calculate uncertainties for slope and intercept with fixed point."""
+        # helper variables
+        sigx = self.sigx
+        sigy = self.sigy
+        sigxy = self.sigxy
+        b = self._slope
+        weights = self.weights
+        xbar = self.xbar
+        ybar = self.ybar
+        u_all = self.xdat - xbar
+        v_all = self.ydat - ybar
+
+        # d(theta) / db
+        dthdb = np.sum(
+            weights**2
+            * (
+                2 * b * (u_all * v_all * sigx**2 - u_all**2 * sigxy)
+                + (u_all**2 * sigy**2 - v_all**2 * sigx**2)
+            )
+        ) + 4 * np.sum(
+            weights**3
+            * (sigxy - b * sigx**2)
+            * (
+                b**2 * (u_all * v_all * sigx**2 - u_all**2 * sigxy)
+                + b * (u_all**2 * sigy**2 - v_all**2 * sigx**2)
+                - (u_all * v_all * sigy**2 - v_all**2 * sigxy)
+            )
+        )
+
+        def calc_dtheta_dxi(it: int):
+            """Calculate partial derivative d(theta)/dxi.
+
+            :param it: Index where the $i$ is at.
+
+            :return: dtheta/dxi
+            """
+            return weights[it] ** 2 * (
+                b**2 * v_all[it] * sigx[it] ** 2
+                - b**2 * 2 * u_all[it] * sigxy[it]
+                + 2 * b * u_all[it] * sigy[it] ** 2
+                - v_all[it] * sigy[it] ** 2
+            )
+
+        def calc_dtheta_dyi(it: int):
+            """Calculate partial derivative d(theta)/dyi.
+
+            :param it: Index where the $i$ is at.
+
+            :return: dtheta/dyi
+            """
+            return weights[it] ** 2 * (
+                b**2 * u_all[it] * sigx[it] ** 2
+                - 2 * b * v_all[it] * sigx[it] ** 2
+                - u_all[it] * sigy[it] ** 2
+                + 2 * v_all[it] * sigxy[it]
+            )
+
+        # calculate uncertainty for slope
+        sigb_sq = 0.0
+        for it, sigxi in enumerate(sigx):
+            sigyi = sigy[it]
+            sigxyi = sigxy[it]
+            dtheta_dxi = calc_dtheta_dxi(it)
+            dtheta_dyi = calc_dtheta_dyi(it)
+            sigb_sq += (
+                dtheta_dxi**2 * sigxi**2
+                + dtheta_dyi**2 * sigyi**2
+                + 2 * sigxyi * dtheta_dxi * dtheta_dyi
+            )
+        sigb_sq /= dthdb**2
+        self._slope_unc = np.sqrt(sigb_sq)
+
+        siga_sq = self.fix_pt[0] ** 2 * sigb_sq
+        print(siga_sq)
         self._intercept_unc = np.sqrt(siga_sq)
 
     def regression_line(
