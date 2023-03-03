@@ -36,8 +36,8 @@ def test_linreg_ci_calc(stephan_ci_data):
     )
 
     assert x_ci_exp == pytest.approx(x_ci_rec)
-    assert y_ci_min_exp == pytest.approx(y_ci_min_rec, rel=1e-4)
-    assert y_ci_max_exp == pytest.approx(y_ci_max_rec, rel=1e-4)
+    assert y_ci_min_exp == pytest.approx(y_ci_min_rec)
+    assert y_ci_max_exp == pytest.approx(y_ci_max_rec)
 
 
 def test_linreg_uncertainty_band_calc(stephan_ci_data):
@@ -66,7 +66,7 @@ def test_linreg_uncertainty_band_calc(stephan_ci_data):
 
 
 def test_linreg_uncertainty_band_sigma(stephan_ci_data):
-    """Ensure that 2 sigma band is twice as wide than 1 sigma band."""
+    """Ensure that 2 sigma band is twice as wide as 1 sigma band."""
     xdat, sigx, ydat, sigy, rho, _, _, _ = stephan_ci_data
 
     my_reg = LinReg(xdat, sigx, ydat, sigy, rho, autocalc=False)
