@@ -9,11 +9,10 @@
 
 The goal of CEREsFit (Correlated Errors Regression Estimate Fit)
 is to provide a python package
-that allows to calculate linear regressions on data sets with uncertainties.
-Linear regressions can be performed for correlated and uncorrelated uncertainties.
+that allows to calculate linear regressions on data sets with correlated uncertainties.
 The calculations follow the methodology published by
 [Mahon (1996)](https://doi.org/10.1080/00206819709465336).
-Errors that were made in that work have been corrected.
+Typos and errors that were made in that work have been corrected.
 A method to allow calculating a linear regression through a fixed point,
 avoiding previously made errors,
 is also provided.
@@ -48,16 +47,17 @@ Below is an example on how to use the package.
 
 >>>  # print out the parameters and their uncertainties
 >>> my_reg.slope
-(0.9983617286559998, 0.0684389236571533)
+(0.9983613298400896, 0.06844666435449052)
 >>> my_reg.intercept
-(0.05545339135826666, 0.11811730191506546)
+(0.05545398718611372, 0.11812746374874884)
 >>> my_reg.mswd
-2.5105964767246842
+2.5105964767071143
+
 ```
 
 Detailed example on how to use the class for fitting and plotting the results
 can be found
-[in this Jupyter notebook](https://github.com/galactic-forensics/CEREsFit/tree/main/examples).
+[in these Jupyter notebooks](https://github.com/galactic-forensics/CEREsFit/tree/main/examples).
 
 
 ## Development & Contributing
