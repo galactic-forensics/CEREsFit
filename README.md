@@ -1,5 +1,6 @@
 # CEREsFit
 
+[![DOI](https://zenodo.org/badge/496215403.svg)](https://zenodo.org/badge/latestdoi/496215403)
 [![pypi](https://img.shields.io/pypi/v/ceresfit?color=informational)](https://pypi.org/project/ceresfit/)
 [![tests](https://github.com/galactic-forensics/CEREsFit/actions/workflows/package_testing.yml/badge.svg)](https://github.com/galactic-forensics/CEREsFit/actions/workflows/package_testing.yml)
 [![codecov](https://codecov.io/gh/galactic-forensics/CEREsFit/branch/main/graph/badge.svg?token=C8KN5UE831)](https://codecov.io/gh/galactic-forensics/CEREsFit)
