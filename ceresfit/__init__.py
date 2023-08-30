@@ -1,10 +1,10 @@
 """Linear regression of data sets with correlated and uncorrelated uncertainties."""
 
-from _.version import __version__
+from ._version import __version__
 from .ceresfit_linreg import LinReg
 
 # Package information
-__all__ = ["LinReg"]
+__all__ = ["LinReg", "__version__"]
 
 __title__ = "ceresfit"
 __description__ = (
