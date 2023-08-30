@@ -1,6 +1,6 @@
 [build-system]
-requires = ["flit_core >=3.2,<4"]
-build-backend = "flit_core.buildapi"
+requires = ["flit_scm"]
+build-backend = "flit_scm:buildapi"
 
 [project]
 authors = [{name = "Reto Trappitsch", email = "reto@galactic-forensics.space"}]
@@ -25,7 +25,7 @@ readme = "README.md"
 requires-python=">=3.8"
 
 [project.urls]
-Home = "https://github.com/galactic-forensics/CEREsFit"
+Source = "https://github.com/galactic-forensics/CEREsFit"
 
 [project.optional-dependencies]
 dev = [
@@ -46,9 +46,12 @@ test = [
 ]
 
 [tool.flit.sdist]
-exclude = ["examples/"]
+exclude = ["examples/", ".gitignore"]
 
 [tool.pytest.ini_options]
 minversion = "6.0"
 addopts = "--cov=ceresfit --cov-report=xml"
 testpaths = "tests"
+
+[tool.setuptools_scm]
+write_to = "ceresfit/_version.py"

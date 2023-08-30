@@ -130,3 +130,6 @@ dmypy.json
 
 # PyCharm
 .idea/
+
+# scm version
+ceresfit/_version.py
