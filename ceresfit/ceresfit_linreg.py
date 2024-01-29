@@ -257,11 +257,7 @@ class LinReg:
             b_new = np.sum(
                 weights**2
                 * v_all
-                * (
-                    u_all * self.sigy**2
-                    + b * v_all * self.sigx**2
-                    - v_all * self.sigxy
-                )
+                * (u_all * self.sigy**2 + b * v_all * self.sigx**2 - v_all * self.sigxy)
             ) / np.sum(
                 weights**2
                 * u_all
