@@ -6,7 +6,7 @@
 [![codecov](https://codecov.io/gh/galactic-forensics/CEREsFit/branch/main/graph/badge.svg?token=C8KN5UE831)](https://codecov.io/gh/galactic-forensics/CEREsFit)
 [![pre-commit.ci status](https://results.pre-commit.ci/badge/github/galactic-forensics/CEREsFit/main.svg)](https://results.pre-commit.ci/latest/github/galactic-forensics/CEREsFit/main)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![Rye](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/rye/main/artwork/badge.json)](https://rye-up.com)
 
 The goal of CEREsFit (Correlated Errors Regression Estimate Fit)
 is to provide a python package
@@ -63,24 +63,34 @@ can be found
 
 ## Development & Contributing
 
-If you would like to contribute,
-clone the GitHub repo and then install the package locally from within the folder via:
+This project is developed using [Rye](https://rye-up.com/).
+After cloning,
+you can simply run
 
-```
-pip install -e .[dev]
-```
+```rye sync```
 
-If you also want to install the full test environment,
-run:
-
-```
-pip install -e .[dev,test]
-```
+in the project folder and you should be good to go.
 
 Code auto formatting is implemented using
 [`pre-commit`](https://pre-commit.com/) hooks.
-Full testing of the package can be done with
-[`nox`](https://nox.thea.codes/en/stable/index.html).
+
+For local formatting and linting,
+please use
+
+```
+rye fmt
+rye lint
+```
+
+For running tests, use:
+
+```
+rye test
+rye run test_docs
+```
+
+The first of these commands runs `pytest`,
+the second checks the documentation tests using `xdoctest`.
 
 Please feel free to raise issues on GitHub
 and open pull requests if you have a feature to be added.

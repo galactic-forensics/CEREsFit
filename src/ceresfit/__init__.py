@@ -1,6 +1,5 @@
 """Linear regression of data sets with correlated and uncorrelated uncertainties."""
 
-from ._version import __version__
 from .ceresfit_linreg import LinReg
 
 # Package information
@@ -18,4 +17,4 @@ __author__ = "Reto Trappitsch"
 __email__ = "reto@galactic-forensics.space"
 
 __license__ = "MIT"
-__copyright__ = "Copyright (c) 2023, Reto Trappitsch"
+__copyright__ = "Copyright (c) 2023-2024, Reto Trappitsch"
