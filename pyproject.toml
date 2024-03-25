@@ -40,6 +40,7 @@ dev-dependencies = [
 ]
 
 [tool.rye.scripts]
+test_cov = "pytest --cov --cov-report xml"
 test_docs = "xdoctest ceresfit --all"
 
 [tool.hatch.metadata]
