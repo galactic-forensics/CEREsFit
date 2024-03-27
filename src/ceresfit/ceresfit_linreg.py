@@ -582,7 +582,6 @@ class LinReg:
         self._slope_unc = np.sqrt(sigb_sq)
 
         siga_sq = self.fix_pt[0] ** 2 * sigb_sq
-        print(siga_sq)
         self._intercept_unc = np.sqrt(siga_sq)
 
     def regression_line(
