@@ -51,3 +51,42 @@ def stephan_ci_data(
         results[:, 1],
         results[:, 2],
     )
+
+
+@pytest.fixture(scope="package")
+def stephan_ci_data_fixpt_0_0(
+    ds_path,
+) -> Tuple[
+    np.ndarray,
+    np.ndarray,
+    np.ndarray,
+    np.ndarray,
+    np.ndarray,
+    np.ndarray,
+    np.ndarray,
+    np.ndarray,
+]:
+    """Provide confidence interval data from Stephan Macro for testing.
+
+    The data and results are stored in the datasets folder.
+
+    :param ds_path: Pytest fixture to provide the path to the data.
+
+    :return: xdat, sigx, ydat, sigy, rho, x_ci, y_ci_min, y_ci_max
+    """
+    data_fname = ds_path.joinpath("ci_calc_data.csv")
+    results_fname = ds_path.joinpath("ci_calc_results_fixpt_0-0.csv")
+
+    data = np.loadtxt(data_fname, skiprows=1, delimiter=",")
+    results = np.loadtxt(results_fname, skiprows=1, delimiter=",")
+
+    return (
+        data[:, 0],
+        data[:, 1],
+        data[:, 2],
+        data[:, 3],
+        data[:, 4],
+        results[:, 0],
+        results[:, 1],
+        results[:, 2],
+    )

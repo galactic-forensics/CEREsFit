@@ -6,7 +6,6 @@
 [![codecov](https://codecov.io/gh/galactic-forensics/CEREsFit/branch/main/graph/badge.svg?token=C8KN5UE831)](https://codecov.io/gh/galactic-forensics/CEREsFit)
 [![pre-commit.ci status](https://results.pre-commit.ci/badge/github/galactic-forensics/CEREsFit/main.svg)](https://results.pre-commit.ci/latest/github/galactic-forensics/CEREsFit/main)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Rye](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/rye/main/artwork/badge.json)](https://rye-up.com)
 
 The goal of CEREsFit (Correlated Errors Regression Estimate Fit)
 is to provide a python package
@@ -17,6 +16,8 @@ Typos and errors that were made in that work have been corrected.
 A method to allow calculating a linear regression through a fixed point,
 avoiding previously made errors,
 is also provided.
+
+Details on CEREsFit can be found in [Stephan and Trappitsch (2023)](https://doi.org/10.1016/j.ijms.2023.117053).
 
 ## Installation
 

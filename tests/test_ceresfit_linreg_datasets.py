@@ -39,7 +39,7 @@ def read_dataset(ds: Path) -> List[np.ndarray]:
 
 @pytest.mark.parametrize("case", zip(DATASETS, PRECISION_ABS))  # noqa: B905
 def test_linreg_cases_a(case, ds_path):
-    """Comparpe cases with correlated uncertainties, no fixed point (sets a)."""
+    """Compare cases with correlated uncertainties, no fixed point (sets a)."""
     ds = ds_path.joinpath(case[0])
     xdat, xunc, ydat, yunc, rho, _, params_exp = read_dataset(ds)
 

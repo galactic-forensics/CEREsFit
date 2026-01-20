@@ -107,22 +107,22 @@ class LinReg:
     @property
     def chi_squared(self) -> float:
         """Return chi_squared of the regression."""
-        return self._chi_squared
+        return float(self._chi_squared)
 
     @property
     def dof(self) -> int:
         """Return the degrees of freedom of the system."""
-        return self._dof
+        return int(self._dof)
 
     @property
     def intercept(self) -> Tuple[float, float]:
         """Return intercept and its 1 sigma uncertainty."""
-        return self._intercept, self._intercept_unc
+        return float(self._intercept), float(self._intercept_unc)
 
     @property
     def mswd(self) -> float:
         """Return MSWD of the regression."""
-        return self._mswd
+        return float(self._mswd)
 
     @property
     def parameters(self) -> np.ndarray:
@@ -143,7 +143,7 @@ class LinReg:
     @property
     def slope(self) -> Tuple[float, float]:
         """Return slope and its 1 sigma uncertainty."""
-        return self._slope, self._slope_unc
+        return float(self._slope), float(self._slope_unc)
 
     def calculate(self):
         """Do the linear regression and save the parameters in the class variables."""
@@ -317,10 +317,13 @@ class LinReg:
             xax_ci = np.linspace(xrange[0], xrange[1], bins)
 
         xdat_save = self.xdat.copy()
+        fix_pt_save = None if self.fix_pt is None else self.fix_pt.copy()
 
         yax_ub = np.zeros(bins)
         for it, deltax in enumerate(xax_ci):
             self.xdat = xdat_save - deltax
+            if self.fix_pt is not None:  # so we have a fixed point, shift it around
+                self.fix_pt[0] = fix_pt_save[0] - deltax
             self.slope_initial_guess()
             self.slope_calculation()
             self.intercept_calculation()
@@ -332,6 +335,8 @@ class LinReg:
 
         # reset all calculations
         self.xdat = xdat_save
+        self.fix_pt = fix_pt_save
+
         self.calculate()
 
         yax_ub_min = xax_ci * self.slope[0] + self.intercept[0] - yax_ub
