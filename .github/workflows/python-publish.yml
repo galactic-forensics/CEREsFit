@@ -7,24 +7,20 @@ on:
   release:
     types: [created]
 
-env:
-  PYTHON_VERSION: "3.12"
-
 jobs:
   deploy:
     if: github.repository_owner == 'galactic-forensics'
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-      - name: Install the latest version of rye
-        uses: eifinger/setup-rye@v2
-      - name: Sync Rye
-        run: |
-          rye pin ${{ env.PYTHON_VERSION }}
-          rye sync
-      - name: Build and release the controller
-        run: |
-          rye build
-          rye publish --token ${{ secrets.PYPI_TOKEN }} --yes
+    - uses: actions/checkout@v4
+    - name: Install uv and set the python version
+      uses: astral-sh/setup-uv@v5
+    - name: Sync UV
+      run: uv sync --all-extras --dev
+    - name: Build and publish
+      env:
+        PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
+      run: |
+        uv build
+        uv publish --token $PYPI_TOKEN

@@ -10,7 +10,7 @@ on:
     branches: [ main ]
 
 env:
-  MAIN_PYTHON_VERSION: "3.12"
+  MAIN_PYTHON_VERSION: "3.14"
 
 jobs:
   # Build and test
@@ -19,28 +19,28 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.8", "3.9", "3.10", "3.11", "3.12"]
+        python-version: ["3.10", "3.11", "3.12", "3.13", "3.14"]
 
     steps:
     - name: Checkout repo
       uses: actions/checkout@v4
-    - name: Install the latest version of rye
-      uses: eifinger/setup-rye@v2
-    - name: Sync Rye
-      run: |
-        rye pin ${{ matrix.python-version }}
-        rye sync --all-features
-    - name: Run Tests and doctests
-      run: |
-        rye test
-        rye run test_docs
+    - name: Install uv and set the python version
+      uses: astral-sh/setup-uv@v5
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install the project
+      run: uv sync --all-extras --dev
+    - name: Run tests
+      run: | 
+        uv run pytest
+        uv run xdoctest ceresfit --all
     - name: Run Lint on one python
       if: ${{ matrix.python-version == env.MAIN_PYTHON_VERSION }}
-      run: rye lint
+      run: uv run ruff check
     - name: Run Pytest with coverage
       if: ${{ matrix.python-version == env.MAIN_PYTHON_VERSION }}
       run: |
-        rye run test_cov
+        uv run pytest --cov=ceresfit --cov-report xml
     - name: Upload coverage reports to Codecov
       if: ${{ matrix.python-version == env.MAIN_PYTHON_VERSION && github.repository_owner == 'galactic-forensics' }}
       uses: codecov/codecov-action@v3

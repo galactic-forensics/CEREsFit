@@ -107,22 +107,22 @@ class LinReg:
     @property
     def chi_squared(self) -> float:
         """Return chi_squared of the regression."""
-        return self._chi_squared
+        return float(self._chi_squared)
 
     @property
     def dof(self) -> int:
         """Return the degrees of freedom of the system."""
-        return self._dof
+        return int(self._dof)
 
     @property
     def intercept(self) -> Tuple[float, float]:
         """Return intercept and its 1 sigma uncertainty."""
-        return self._intercept, self._intercept_unc
+        return float(self._intercept), float(self._intercept_unc)
 
     @property
     def mswd(self) -> float:
         """Return MSWD of the regression."""
-        return self._mswd
+        return float(self._mswd)
 
     @property
     def parameters(self) -> np.ndarray:
@@ -143,7 +143,7 @@ class LinReg:
     @property
     def slope(self) -> Tuple[float, float]:
         """Return slope and its 1 sigma uncertainty."""
-        return self._slope, self._slope_unc
+        return float(self._slope), float(self._slope_unc)
 
     def calculate(self):
         """Do the linear regression and save the parameters in the class variables."""
