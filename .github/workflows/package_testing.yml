@@ -31,7 +31,7 @@ jobs:
     - name: Install the project
       run: uv sync --all-extras --dev
     - name: Run tests
-      run: | 
+      run: |
         uv run pytest
         uv run xdoctest ceresfit --all
     - name: Run Lint on one python

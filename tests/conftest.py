@@ -52,6 +52,7 @@ def stephan_ci_data(
         results[:, 2],
     )
 
+
 @pytest.fixture(scope="package")
 def stephan_ci_data_fixpt_0_0(
     ds_path,
