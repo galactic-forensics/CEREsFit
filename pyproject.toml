@@ -1,6 +1,6 @@
 [project]
 name = "ceresfit"
-version = "0.3.1"
+version = "0.3.2"
 description = "Linear Regression for data set with correlated or uncorrelated uncertainties in both axes."
 authors = [
     { name = "Reto Trappitsch", email = "reto@galactic-forensics.space" }
