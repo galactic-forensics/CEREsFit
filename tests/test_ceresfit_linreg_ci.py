@@ -24,7 +24,7 @@ def test_linreg_ci_calc(stephan_ci_data):
 
     my_reg = LinReg(xdat, sigx, ydat, sigy, rho, autocalc=True)
 
-    # Stephan uses 1 sigma error bands: mulitply with student t factor
+    # Stephan uses 1 sigma error bands: multiply with student t factor
     y_ci = x_ci_exp * my_reg.slope[0] + my_reg.intercept[0]
     zfac = stats.t.ppf(1 - (1 - p_conf) / 2.0, len(xdat) - 2)
     y_ci_min_exp = y_ci - np.abs(y_ci - y_ci_min_st) * zfac
@@ -40,8 +40,8 @@ def test_linreg_ci_calc(stephan_ci_data):
     assert y_ci_max_exp == pytest.approx(y_ci_max_rec)
 
 
-def test_linreg_uncertainty_band_calc(stephan_ci_data):
-    """Compare uncertainty band calculation with Stephan Macro."""
+def test_linreg_uncertainty_band_calc_fixpt_0_0(stephan_ci_data_fixpt_0_0):
+    """Compare uncertainty band calculation with Stephan Macro for fixed point at (0,0)."""
     (
         xdat,
         sigx,
@@ -51,18 +51,19 @@ def test_linreg_uncertainty_band_calc(stephan_ci_data):
         x_ub_exp,
         y_ub_min_exp,
         y_ub_max_exp,
-    ) = stephan_ci_data
+    ) = stephan_ci_data_fixpt_0_0
 
-    my_reg = LinReg(xdat, sigx, ydat, sigy, rho, autocalc=False)
+    fixpt = np.array([0.0, 0.0])
+    my_reg = LinReg(xdat, sigx, ydat, sigy, rho, fixpt, autocalc=False)
 
     xrange = np.array([x_ub_exp.min(), x_ub_exp.max()])
     x_ub_rec, y_ub_min_rec, y_ub_max_rec = my_reg.uncertainty_band(
         xrange=xrange, bins=len(x_ub_exp)
     )
 
-    assert x_ub_exp == pytest.approx(x_ub_rec)
-    assert y_ub_min_exp == pytest.approx(y_ub_min_rec, rel=1e-4)
-    assert y_ub_max_exp == pytest.approx(y_ub_max_rec, rel=1e-4)
+    assert pytest.approx(x_ub_rec) == x_ub_exp
+    assert pytest.approx(y_ub_min_rec, rel=1e-4) == y_ub_min_exp
+    assert pytest.approx(y_ub_max_rec, rel=1e-4) == y_ub_max_exp
 
 
 def test_linreg_uncertainty_band_sigma(stephan_ci_data):

@@ -317,10 +317,13 @@ class LinReg:
             xax_ci = np.linspace(xrange[0], xrange[1], bins)
 
         xdat_save = self.xdat.copy()
+        fix_pt_save = None if self.fix_pt is None else self.fix_pt.copy()
 
         yax_ub = np.zeros(bins)
         for it, deltax in enumerate(xax_ci):
             self.xdat = xdat_save - deltax
+            if self.fix_pt is not None:  # so we have a fixed point, shift it around
+                self.fix_pt[0] = fix_pt_save[0] - deltax
             self.slope_initial_guess()
             self.slope_calculation()
             self.intercept_calculation()
@@ -332,6 +335,8 @@ class LinReg:
 
         # reset all calculations
         self.xdat = xdat_save
+        self.fix_pt = fix_pt_save
+
         self.calculate()
 
         yax_ub_min = xax_ci * self.slope[0] + self.intercept[0] - yax_ub
