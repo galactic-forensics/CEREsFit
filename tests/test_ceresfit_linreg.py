@@ -4,6 +4,7 @@ import numpy as np
 import pytest
 
 from ceresfit import LinReg
+
 from .test_ceresfit_linreg_datasets import read_dataset
 
 

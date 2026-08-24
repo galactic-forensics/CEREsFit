@@ -2,7 +2,7 @@
 
 import numpy as np
 import pytest
-import scipy.stats as stats
+from scipy import stats
 
 from ceresfit import LinReg
 
