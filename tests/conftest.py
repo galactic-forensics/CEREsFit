@@ -1,7 +1,6 @@
 """Provide fixtures for test suite."""
 
 from pathlib import Path
-from typing import Tuple
 
 import numpy as np
 import pytest
@@ -17,7 +16,7 @@ def ds_path(request) -> Path:
 @pytest.fixture(scope="package")
 def stephan_ci_data(
     ds_path,
-) -> Tuple[
+) -> tuple[
     np.ndarray,
     np.ndarray,
     np.ndarray,
@@ -56,7 +55,7 @@ def stephan_ci_data(
 @pytest.fixture(scope="package")
 def stephan_ci_data_fixpt_0_0(
     ds_path,
-) -> Tuple[
+) -> tuple[
     np.ndarray,
     np.ndarray,
     np.ndarray,

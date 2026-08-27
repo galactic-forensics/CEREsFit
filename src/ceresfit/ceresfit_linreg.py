@@ -1,11 +1,10 @@
 """Linear Regression according to Mahon (1996) - corrected."""
 
-from typing import Tuple, Union
 import warnings
 
 import numpy as np
 from numpy.polynomial import Polynomial
-import scipy.stats as stats
+from scipy import stats
 from scipy.stats.distributions import chi2
 
 
@@ -39,7 +38,7 @@ class LinReg:
         sigx: np.ndarray,
         ydat: np.ndarray,
         sigy: np.ndarray,
-        rho: Union[float, np.ndarray] = None,
+        rho: float | np.ndarray = None,
         fixpt: np.ndarray = None,
         autocalc=True,
         **kwargs,
@@ -87,14 +86,8 @@ class LinReg:
         self._mswd = None
 
         # keyword arguments
-        if "regression_limit" in kwargs:
-            self.reg_limit = kwargs["regression_limit"]
-        else:
-            self.reg_limit = 1e-12
-        if "iter_max" in kwargs:
-            self.iter_max = kwargs["iter_max"]
-        else:
-            self.iter_max = 1e6
+        self.reg_limit = kwargs.get("regression_limit", 1e-12)
+        self.iter_max = kwargs.get("iter_max", 1e6)
 
         # helper variables
         self.xbar = None
@@ -115,7 +108,7 @@ class LinReg:
         return int(self._dof)
 
     @property
-    def intercept(self) -> Tuple[float, float]:
+    def intercept(self) -> tuple[float, float]:
         """Return intercept and its 1 sigma uncertainty."""
         return float(self._intercept), float(self._intercept_unc)
 
@@ -141,7 +134,7 @@ class LinReg:
         )
 
     @property
-    def slope(self) -> Tuple[float, float]:
+    def slope(self) -> tuple[float, float]:
         """Return slope and its 1 sigma uncertainty."""
         return float(self._slope), float(self._slope_unc)
 
@@ -158,7 +151,7 @@ class LinReg:
         p_conf: float = 0.95,
         xrange: np.ndarray = None,
         bins: int = 100,
-    ) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
+    ) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
         """Calculate the confidence intervals and return them.
 
         :param p_conf: Confidence interval, default 95% (``p_conf=0.95``).
@@ -198,7 +191,7 @@ class LinReg:
         """Calculate the intercept."""
         self._intercept = self.ybar - self._slope * self.xbar
 
-    def mswd_ci(self, p_conf=0.95) -> Tuple[float, float]:
+    def mswd_ci(self, p_conf=0.95) -> tuple[float, float]:
         """Calculate confidence interval of MSWD value given degrees of freedom of.
 
         :param p_conf: Confidence level, defaults to 0.95 (95%)
@@ -301,7 +294,7 @@ class LinReg:
         sigma=1,
         xrange: np.ndarray = None,
         bins: int = 100,
-    ) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
+    ) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
         """Calculate the uncertainty bands and return them.
 
         :param sigma: How many sigma should the band be? Default: 1
@@ -591,7 +584,7 @@ class LinReg:
 
     def regression_line(
         self, xrange: np.ndarray = None
-    ) -> Tuple[np.ndarray, np.ndarray]:
+    ) -> tuple[np.ndarray, np.ndarray]:
         """Return xdata and ydata for the calculated regression line for plotting.
 
         :param xrange: Range for which to calculate the regression. Default: ``None``.
@@ -606,9 +599,7 @@ class LinReg:
         return xrange, ydat
 
 
-def kron_delta(
-    ind1: Union[int, np.ndarray], ind2: Union[int, np.ndarray]
-) -> Union[int, np.ndarray]:
+def kron_delta(ind1: int | np.ndarray, ind2: int | np.ndarray) -> int | np.ndarray:
     """Calculate Kronecker-delta for variables i,j.
 
     Compare two indexes and return 0 if the same, otherwise 1. If an ndarray is given,

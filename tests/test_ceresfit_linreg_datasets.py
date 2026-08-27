@@ -1,20 +1,18 @@
 """Test the Mahon Linear Regression with the data sets from Stephan and Trappitsch."""
 
 from pathlib import Path
-from typing import List
 
 import numpy as np
 import pytest
 
 from ceresfit import LinReg
 
-
 DATASETS = ["set1.csv", "set2.csv", "set3.csv", "set4.csv", "set5.csv"]
 # absolute precision for comparison of non MSWD parameters
 PRECISION_ABS = [1e-8, 1e-8, 1e-8, 1e-8, 1e-8]
 
 
-def read_dataset(ds: Path) -> List[np.ndarray]:
+def read_dataset(ds: Path) -> list[np.ndarray]:
     """Read a specific dataset and return the data.
 
     :param ds: Path to the dataset csv file.
@@ -37,7 +35,7 @@ def read_dataset(ds: Path) -> List[np.ndarray]:
     return ret_data
 
 
-@pytest.mark.parametrize("case", zip(DATASETS, PRECISION_ABS))  # noqa: B905
+@pytest.mark.parametrize("case", zip(DATASETS, PRECISION_ABS))
 def test_linreg_cases_a(case, ds_path):
     """Compare cases with correlated uncertainties, no fixed point (sets a)."""
     ds = ds_path.joinpath(case[0])
@@ -53,7 +51,7 @@ def test_linreg_cases_a(case, ds_path):
     assert reg.chi_squared == pytest.approx(reg.mswd * (len(xdat) - 2))
 
 
-@pytest.mark.parametrize("case", zip(DATASETS, PRECISION_ABS))  # noqa: B905
+@pytest.mark.parametrize("case", zip(DATASETS, PRECISION_ABS))
 def test_linreg_cases_b(case, ds_path):
     """Comparpe cases with uncorrelated uncertainties, no fixed point (sets b)."""
     ds = ds_path.joinpath(case[0])
@@ -66,7 +64,7 @@ def test_linreg_cases_b(case, ds_path):
     assert params_exp[ind_params][4] == pytest.approx(reg.parameters[4], rel=1e-3)
 
 
-@pytest.mark.parametrize("case", zip(DATASETS, PRECISION_ABS))  # noqa: B905
+@pytest.mark.parametrize("case", zip(DATASETS, PRECISION_ABS))
 def test_linreg_cases_c(case, ds_path):
     """Comparpe cases with correlated uncertainties, with fixed point (sets c)."""
     ds = ds_path.joinpath(case[0])
