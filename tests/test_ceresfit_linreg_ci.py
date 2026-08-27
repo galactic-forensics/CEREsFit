@@ -2,7 +2,7 @@
 
 import numpy as np
 import pytest
-import scipy.stats as stats
+from scipy import stats
 
 from ceresfit import LinReg
 
@@ -72,8 +72,8 @@ def test_linreg_uncertainty_band_sigma(stephan_ci_data):
 
     my_reg = LinReg(xdat, sigx, ydat, sigy, rho, autocalc=False)
 
-    x_ub1, y_ub1_min, y_ub1_max = my_reg.uncertainty_band(sigma=1)
-    x_ub2, y_ub2_min, y_ub2_max = my_reg.uncertainty_band(sigma=2)
+    _, y_ub1_min, y_ub1_max = my_reg.uncertainty_band(sigma=1)
+    _, y_ub2_min, y_ub2_max = my_reg.uncertainty_band(sigma=2)
 
     band_1sig = np.abs(y_ub1_max - y_ub1_min)
     band_2sig = np.abs(y_ub2_max - y_ub2_min)

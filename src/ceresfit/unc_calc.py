@@ -1,15 +1,15 @@
 """Uncertainty calculations that are outside the linear regression routine."""
 
-from typing import Any, Tuple, Union
+from typing import Any
 
 import numpy as np
 
 
 def error_bar_angle_length(
-    sigx: Union[float, np.ndarray],
-    sigy: Union[float, np.ndarray],
-    rho: Union[float, np.ndarray],
-) -> Tuple[np.ndarray, np.ndarray]:
+    sigx: float | np.ndarray,
+    sigy: float | np.ndarray,
+    rho: float | np.ndarray,
+) -> tuple[np.ndarray, np.ndarray]:
     """Calculate the angles and length of a given error bar.
 
     For a given uncertainty, calculate the angle and length of the rotated error bar
@@ -62,12 +62,12 @@ def error_bar_angle_length(
 
 
 def error_bar_positions(
-    xdat: Union[float, np.ndarray],
-    sigx: Union[float, np.ndarray],
-    ydat: Union[float, np.ndarray],
-    sigy: Union[float, np.ndarray],
-    rho: Union[float, np.ndarray],
-) -> Tuple[np.ndarray, np.ndarray]:
+    xdat: float | np.ndarray,
+    sigx: float | np.ndarray,
+    ydat: float | np.ndarray,
+    sigy: float | np.ndarray,
+    rho: float | np.ndarray,
+) -> tuple[np.ndarray, np.ndarray]:
     """Calculate the positions of rotated error bars.
 
     This routine returns two arrays, both are twice as long as the initial data with two

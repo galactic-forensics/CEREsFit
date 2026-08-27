@@ -4,6 +4,7 @@ import numpy as np
 import pytest
 
 from ceresfit import LinReg
+
 from .test_ceresfit_linreg_datasets import read_dataset
 
 
@@ -18,7 +19,7 @@ def test_linreg_keywords(ds_path):
     """Ensure keywords are accepted by routine."""
     case = "set1.csv"
     ds = ds_path.joinpath(case)
-    xdat, xunc, ydat, yunc, rho, _, params_exp = read_dataset(ds)
+    xdat, xunc, ydat, yunc, rho, _, _ = read_dataset(ds)
 
     reg_limit = 42
     iter_max = 13
@@ -34,7 +35,7 @@ def test_linreg_iteration_warning(ds_path):
     """Test that iteration throws a warning if runs out of max_iter."""
     case = "set1.csv"
     ds = ds_path.joinpath(case)
-    xdat, xunc, ydat, yunc, rho, _, params_exp = read_dataset(ds)
+    xdat, xunc, ydat, yunc, rho, _, _ = read_dataset(ds)
     iter_max = 1
 
     with pytest.warns(UserWarning):
