@@ -1,6 +1,7 @@
 """Linear Regression according to Mahon (1996) - corrected."""
 
 import warnings
+from typing import Tuple, Union
 
 import numpy as np
 from numpy.polynomial import Polynomial
